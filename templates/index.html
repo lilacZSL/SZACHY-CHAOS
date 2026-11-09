@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>SZACHY CHAOS ONLINE</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div id="app">
+
+    <header>
+        <div class="brand">
+            <span class="brand-icon">♟</span>
+            <div>
+                <h1>CHAOS<span>CHESS</span></h1>
+                <small>STRATEGIA. MAGIA. CHAOS.</small>
+            </div>
+        </div>
+        <div class="online-indicator">
+            <span class="dot"></span> ONLINE
+        </div>
+    </header>
+
+    <main id="menu" class="menu">
+        <div class="hero">
+            <div class="eyebrow">NOWA GENERACJA SZACHÓW</div>
+            <h2>Klasyczna strategia.<br>
+                <span>Nieklasyczne moce.</span></h2>
+            <p>Każda figura ma własną supermoc. Każda partia
+               jest nieprzewidywalna.</p>
+        </div>
+
+        <div class="menu-grid">
+            <section class="menu-card">
+                <div class="card-icon">⌘</div>
+                <h3>Gra z komputerem</h3>
+                <p>Zmierz się z Chaos AI.</p>
+
+                <label for="difficulty">Poziom trudności</label>
+                <select id="difficulty">
+                    <option value="1">Łatwy</option>
+                    <option value="2" selected>Średni</option>
+                    <option value="3">Trudny</option>
+                </select>
+
+                <button id="aiBtn" class="primary">
+                    GRAJ Z AI
+                </button>
+            </section>
+
+            <section class="menu-card">
+                <div class="card-icon">♧</div>
+                <h3>Gra online</h3>
+                <p>Stwórz pokój lub dołącz do znajomego.</p>
+
+                <label for="playerName">Twoja nazwa</label>
+                <input id="playerName"
+                       maxlength="20"
+                       placeholder="Wpisz nazwę">
+
+                <button id="createBtn" class="primary">
+                    STWÓRZ LOBBY
+                </button>
+
+                <div class="join-row">
+                    <input id="roomCode"
+                           maxlength="6"
+                           placeholder="KOD POKOJU">
+                    <button id="joinBtn" class="secondary">
+                        DOŁĄCZ
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <main id="waiting" class="waiting hidden">
+        <div class="waiting-card">
+            <div class="eyebrow">POCZEKALNIA</div>
+            <h2>Twoje lobby</h2>
+            <p>Wyślij ten kod znajomemu:</p>
+            <div id="roomCodeDisplay" class="room-code">------</div>
+            <button id="copyBtn" class="secondary">
+                KOPIUJ KOD
+            </button>
+            <p id="waitingMessage">Oczekiwanie na drugiego gracza...</p>
+        </div>
+    </main>
+
+    <main id="game" class="game hidden">
+
+        <div class="game-top">
+            <div>
+                <span class="eyebrow">AKTUALNA PARTIA</span>
+                <h2>SZACHY CHAOS</h2>
+            </div>
+            <div id="turn" class="turn">BIAŁE</div>
+        </div>
+
+        <div class="game-layout">
+
+            <section class="board-section">
+                <div class="player-label" id="blackPlayer">
+                    CZARNE
+                </div>
+
+                <div id="board" class="board"></div>
+
+                <div class="player-label" id="whitePlayer">
+                    BIAŁE
+                </div>
+            </section>
+
+            <aside class="side-panel">
+                <div class="panel-block">
+                    <div class="eyebrow">WYBRANA FIGURA</div>
+                    <h3 id="pieceName">Nie wybrano</h3>
+                    <div id="powerCard" class="power-card">
+                        <span>✨</span>
+                        <div>
+                            <b>SUPERMOCE</b>
+                            <small>Wybierz figurę na planszy.</small>
+                        </div>
+                    </div>
+                    <button id="usePower"
+                            class="primary full"
+                            disabled>
+                        AKTYWUJ MOC
+                    </button>
+                    <button id="cancelPower"
+                            class="secondary full hidden">
+                        ANULUJ WYBÓR
+                    </button>
+                </div>
+
+                <div class="panel-block">
+                    <div class="eyebrow">STAN PARTII</div>
+                    <div id="message" class="message">
+                        Oczekiwanie na graczy
+                    </div>
+                </div>
+
+                <div class="panel-block">
+                    <div class="eyebrow">HISTORIA RUCHÓW</div>
+                    <div id="history" class="history">
+                        Brak ruchów.
+                    </div>
+                </div>
+
+                <div class="panel-block">
+                    <button id="newGame"
+                            class="secondary full">
+                        POWRÓT DO MENU
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        CHAOSCHESS © 2026 · GRA STRATEGICZNA ONLINE
+    </footer>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>
